@@ -109,8 +109,18 @@
       </a>
     </li>
     <li class="nav-item">
+      <a class="nav-link {{ request()->routeIs('hr.departments.*') ? 'active' : '' }}" href="{{ route('hr.departments.index') }}">
+        <i class="fa fa-sitemap"></i> الإدارات
+      </a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link {{ request()->routeIs('hr.leaves.*') ? 'active' : '' }}" href="{{ route('hr.leaves.index') }}">
         <i class="fa fa-calendar-check-o"></i> الإجازات
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {{ request()->routeIs('hr.attendance.*') ? 'active' : '' }}" href="{{ route('hr.attendance.index') }}">
+        <i class="fa fa-clock-o"></i> الحضور والغياب
       </a>
     </li>
   </ul>
@@ -122,13 +132,53 @@
         <i class="fa fa-cubes"></i> الأصناف
       </a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link {{ request()->routeIs('warehouse.add-orders.*') ? 'active' : '' }}" href="{{ route('warehouse.add-orders.index') }}">
+        <i class="fa fa-plus-square"></i> أوامر الإضافة
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {{ request()->routeIs('warehouse.withdrawal-orders.*') ? 'active' : '' }}" href="{{ route('warehouse.withdrawal-orders.index') }}">
+        <i class="fa fa-minus-square"></i> أوامر الصرف
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {{ request()->routeIs('warehouse.purchase-requests.*') ? 'active' : '' }}" href="{{ route('warehouse.purchase-requests.index') }}">
+        <i class="fa fa-shopping-cart"></i> طلبات الشراء
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {{ request()->routeIs('warehouse.suppliers.*') ? 'active' : '' }}" href="{{ route('warehouse.suppliers.index') }}">
+        <i class="fa fa-truck"></i> الموردون
+      </a>
+    </li>
   </ul>
 
   <h6 class="sidebar-heading"><i class="fa fa-graduation-cap ml-1"></i> شئون الطلاب</h6>
   <ul class="nav flex-column">
     <li class="nav-item">
-      <a class="nav-link {{ request()->routeIs('students.*') ? 'active' : '' }}" href="{{ route('students.index') }}">
+      <a class="nav-link {{ request()->routeIs('students.index') || request()->routeIs('students.show') || request()->routeIs('students.edit') || request()->routeIs('students.create') ? 'active' : '' }}" href="{{ route('students.index') }}">
         <i class="fa fa-graduation-cap"></i> الطلاب
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {{ request()->routeIs('students.cohorts.*') ? 'active' : '' }}" href="{{ route('students.cohorts.index') }}">
+        <i class="fa fa-layer-group"></i> الدفعات
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {{ request()->routeIs('students.exit-permits.*') ? 'active' : '' }}" href="{{ route('students.exit-permits.index') }}">
+        <i class="fa fa-sign-out"></i> تصاريح الخروج
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {{ request()->routeIs('students.overnight-permits.*') ? 'active' : '' }}" href="{{ route('students.overnight-permits.index') }}">
+        <i class="fa fa-moon-o"></i> تصاريح المبيت
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {{ request()->routeIs('students.behavior.*') ? 'active' : '' }}" href="{{ route('students.behavior.index') }}">
+        <i class="fa fa-exclamation-triangle"></i> المخالفات السلوكية
       </a>
     </li>
   </ul>
