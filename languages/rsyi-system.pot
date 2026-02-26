@@ -1,0 +1,290 @@
+# RSYI Unified Management System — Translation Template
+# Copyright (C) 2024 AYMAN RAGAB
+# This file is distributed under the GPL-2.0-or-later license.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: RSYI Unified System 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/aymanrag1/RSYI-SYSTEM\n"
+"POT-Creation-Date: 2024-01-01 00:00+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Arabic <ar@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: admin\n"
+"X-Poedit-SearchPath-2: includes\n"
+"X-Poedit-SearchPath-3: portal\n"
+
+#: rsyi-system.php
+msgid "RSYI — النظام الموحد"
+msgstr ""
+
+#: rsyi-system.php
+msgid "RSYI الموحد"
+msgstr ""
+
+#: admin/class-rsyi-admin.php admin/views/dashboard.php
+msgid "لوحة التحكم"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "لوحة التحكم الموحدة"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "نظام الموارد البشرية"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "إجمالي الموظفين"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "إجازات معلقة"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "غائبون اليوم"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "مخالفات هذا الشهر"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "نظام المخازن"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "إجمالي الأصناف"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "طلبات شراء معلقة"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "أوامر صرف اليوم"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "أصناف منخفضة المخزون"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "شئون الطلاب"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "إجمالي الطلاب"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "مستندات بانتظار الموافقة"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "تصاريح معلقة"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "مخالفات سلوكية"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "عرض التفاصيل"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "توزيع الأنظمة"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "الحضور هذا الأسبوع"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "وصول سريع"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "إضافة موظف"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "تسجيل طالب"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "أمر إضافة مخزون"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "أمر صرف مخزون"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "آخر العمليات"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "عرض الكل"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "لا توجد عمليات مسجّلة بعد."
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "النظام"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "العملية"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "المستخدم"
+msgstr ""
+
+#: admin/views/dashboard.php
+msgid "التاريخ"
+msgstr ""
+
+#: includes/class-rsyi-dependencies.php
+msgid "نظام الموارد البشرية (RSYI HR System)"
+msgstr ""
+
+#: includes/class-rsyi-dependencies.php
+msgid "نظام المخازن (Institute Warehouse)"
+msgstr ""
+
+#: includes/class-rsyi-dependencies.php
+msgid "نظام شئون الطلاب (Student Affairs)"
+msgstr ""
+
+#: includes/class-rsyi-settings.php
+msgid "معلومات المعهد"
+msgstr ""
+
+#: includes/class-rsyi-settings.php
+msgid "اسم المعهد (عربي)"
+msgstr ""
+
+#: includes/class-rsyi-settings.php
+msgid "اسم المعهد (إنجليزي)"
+msgstr ""
+
+#: includes/class-rsyi-settings.php
+msgid "رابط الشعار"
+msgstr ""
+
+#: includes/class-rsyi-settings.php
+msgid "البريد الإلكتروني"
+msgstr ""
+
+#: includes/class-rsyi-settings.php
+msgid "الأنظمة المُفعَّلة"
+msgstr ""
+
+#: includes/class-rsyi-settings.php
+msgid "نظام المخازن"
+msgstr ""
+
+#: includes/class-rsyi-settings.php
+msgid "نظام شئون الطلاب"
+msgstr ""
+
+#: includes/class-rsyi-settings.php
+msgid "الإعدادات العامة"
+msgstr ""
+
+#: includes/class-rsyi-settings.php
+msgid "اللغة الافتراضية"
+msgstr ""
+
+#: includes/class-rsyi-settings.php
+msgid "عدد العناصر في الصفحة"
+msgstr ""
+
+#: includes/class-rsyi-settings.php
+msgid "تفعيل سجل العمليات"
+msgstr ""
+
+#: includes/class-rsyi-settings.php
+msgid "تفعيل الإشعارات"
+msgstr ""
+
+#: includes/class-rsyi-settings.php
+msgid "إعدادات النظام الموحد"
+msgstr ""
+
+#: includes/class-rsyi-settings.php
+msgid "الإعدادات"
+msgstr ""
+
+#: assets/js/admin.js
+msgid "هل أنت متأكد من الحذف؟ لا يمكن التراجع."
+msgstr ""
+
+#: assets/js/admin.js
+msgid "جارٍ الحفظ..."
+msgstr ""
+
+#: assets/js/admin.js
+msgid "تم الحفظ بنجاح"
+msgstr ""
+
+#: assets/js/admin.js
+msgid "حدث خطأ، حاول مجددًا"
+msgstr ""
+
+#: admin/views/hr/employees.php
+msgid "الموظفون"
+msgstr ""
+
+#: admin/views/hr/departments.php
+msgid "الأقسام"
+msgstr ""
+
+#: admin/views/hr/leaves.php
+msgid "الإجازات"
+msgstr ""
+
+#: admin/views/hr/attendance.php
+msgid "الحضور والانصراف"
+msgstr ""
+
+#: admin/views/hr/overtime.php
+msgid "العمل الإضافي"
+msgstr ""
+
+#: admin/views/hr/violations.php
+msgid "المخالفات"
+msgstr ""
+
+#: admin/views/warehouse/products.php
+msgid "المنتجات والأصناف"
+msgstr ""
+
+#: admin/views/warehouse/purchase-requests.php
+msgid "طلبات الشراء"
+msgstr ""
+
+#: admin/views/students/students.php
+msgid "قيد الطلاب"
+msgstr ""
+
+#: admin/views/students/documents.php
+msgid "المستندات"
+msgstr ""
+
+#: admin/views/students/permits.php
+msgid "التصاريح"
+msgstr ""
