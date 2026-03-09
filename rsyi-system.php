@@ -17,10 +17,31 @@ defined( 'ABSPATH' ) || exit;
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
-define( 'RSYI_SYS_VERSION',  '2.0.0' );
+define( 'RSYI_SYS_VERSION',  '2.0.1' );
 define( 'RSYI_SYS_DIR',      plugin_dir_path( __FILE__ ) );
 define( 'RSYI_SYS_URL',      plugin_dir_url( __FILE__ ) );
 define( 'RSYI_SYS_BASENAME', plugin_basename( __FILE__ ) );
+
+// ثوابت الوحدات الفرعية — تُعرَّف هنا لتكون متاحة لكلاسات الوحدات
+// Sub-module constants — defined here so module classes resolve their paths
+if ( ! defined( 'RSYI_HR_DIR' ) ) {
+    define( 'RSYI_HR_DIR', RSYI_SYS_DIR . 'modules/hr/' );
+}
+if ( ! defined( 'RSYI_HR_URL' ) ) {
+    define( 'RSYI_HR_URL', RSYI_SYS_URL . 'modules/hr/' );
+}
+if ( ! defined( 'IW_PLUGIN_DIR' ) ) {
+    define( 'IW_PLUGIN_DIR', RSYI_SYS_DIR . 'modules/warehouse/' );
+}
+if ( ! defined( 'IW_PLUGIN_URL' ) ) {
+    define( 'IW_PLUGIN_URL', RSYI_SYS_URL . 'modules/warehouse/' );
+}
+if ( ! defined( 'RSYI_SA_DIR' ) ) {
+    define( 'RSYI_SA_DIR', RSYI_SYS_DIR . 'modules/students/' );
+}
+if ( ! defined( 'RSYI_SA_URL' ) ) {
+    define( 'RSYI_SA_URL', RSYI_SYS_URL . 'modules/students/' );
+}
 
 // ─── Autoloader ──────────────────────────────────────────────────────────────
 
@@ -104,10 +125,10 @@ function rsyi_sys_init(): void {
         RSYI_Sys_Admin::init();
     }
 
-    // تهيئة البوابة | Init portal shortcodes
+    // تهيئة بوابة شئون الطلاب | Init Student Affairs portal shortcodes
     if ( ! is_admin() && RSYI_Sys_Module_Loader::is_loaded( 'students' ) ) {
-        if ( class_exists( 'RSYI_Portal_Shortcodes' ) ) {
-            RSYI_Portal_Shortcodes::init();
+        if ( class_exists( 'RSYI_SA\Shortcodes' ) ) {
+            \RSYI_SA\Shortcodes::init();
         }
     }
 }
