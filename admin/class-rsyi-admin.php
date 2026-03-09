@@ -1,8 +1,10 @@
 <?php
 /**
  * RSYI Unified System — Admin Interface
+ * واجهة الإدارة الموحدة للنظام الإداري لمعهد البحر الأحمر
  *
- * يُسجِّل قائمة لوحة الإدارة الموحدة ويحمِّل الـ assets الخاصة بها.
+ * يُسجِّل قائمة موحدة بتبويبات لكل وحدة + يُحمِّل الأصول.
+ * Single admin menu with tabs for each enabled module.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -12,243 +14,205 @@ class RSYI_Sys_Admin {
     // ─── Init ────────────────────────────────────────────────────────────────
 
     public static function init(): void {
-        add_action( 'admin_menu',           [ self::class, 'register_menu' ] );
+        add_action( 'admin_menu',            [ self::class, 'register_menu' ] );
         add_action( 'admin_enqueue_scripts', [ self::class, 'enqueue_assets' ] );
         add_action( 'wp_ajax_rsyi_sys_mark_notification_read', [ self::class, 'ajax_mark_read' ] );
         add_action( 'wp_ajax_rsyi_sys_get_notifications',      [ self::class, 'ajax_get_notifications' ] );
+        add_action( 'wp_ajax_rsyi_toggle_module',              [ self::class, 'ajax_toggle_module' ] );
     }
 
     // ─── Menu ────────────────────────────────────────────────────────────────
 
     public static function register_menu(): void {
 
-        // القائمة الرئيسية
+        // القائمة الرئيسية | Main menu
         add_menu_page(
-            __( 'RSYI — النظام الموحد', 'rsyi-system' ),
-            __( 'RSYI الموحد', 'rsyi-system' ),
-            'rsyi_sys_view_dashboard',
+            __( 'RSYI — النظام الإداري الموحد', 'rsyi-system' ),
+            __( 'RSYI System', 'rsyi-system' ),
+            'manage_options',
             'rsyi-system',
-            [ self::class, 'render_dashboard' ],
+            [ self::class, 'render_main' ],
             'dashicons-networking',
             2
         );
 
-        // لوحة التحكم
+        // لوحة التحكم | Dashboard
         add_submenu_page(
             'rsyi-system',
+            __( 'لوحة التحكم | Dashboard', 'rsyi-system' ),
             __( 'لوحة التحكم', 'rsyi-system' ),
-            __( 'لوحة التحكم', 'rsyi-system' ),
-            'rsyi_sys_view_dashboard',
+            'manage_options',
             'rsyi-system',
-            [ self::class, 'render_dashboard' ]
+            [ self::class, 'render_main' ]
         );
 
-        // ── نظام الموارد البشرية ─────────────────────────────────────────
-        if ( RSYI_Sys_Dependencies::is_active( 'hr' ) ) {
-            self::hr_submenu();
-        }
-
-        // ── نظام المخازن ──────────────────────────────────────────────────
-        if ( RSYI_Sys_Dependencies::is_active( 'warehouse' ) ) {
-            self::warehouse_submenu();
-        }
-
-        // ── شئون الطلاب ───────────────────────────────────────────────────
-        if ( RSYI_Sys_Dependencies::is_active( 'students' ) ) {
-            self::students_submenu();
-        }
-
-        // سجل العمليات
-        add_submenu_page(
-            'rsyi-system',
-            __( 'سجل العمليات', 'rsyi-system' ),
-            __( 'سجل العمليات', 'rsyi-system' ),
-            'rsyi_sys_view_audit_log',
-            'rsyi-audit-log',
-            [ self::class, 'render_audit_log' ]
-        );
-    }
-
-    // ─── Sub-menus ───────────────────────────────────────────────────────────
-
-    private static function hr_submenu(): void {
-        $pages = [
-            [ 'rsyi-hr-employees',   __( 'الموظفون',           'rsyi-system' ), 'rsyi_hr_view_employees'   ],
-            [ 'rsyi-hr-departments', __( 'الأقسام',            'rsyi-system' ), 'rsyi_hr_view_departments' ],
-            [ 'rsyi-hr-job-titles',  __( 'المسميات الوظيفية', 'rsyi-system' ), 'rsyi_hr_view_departments' ],
-            [ 'rsyi-hr-leaves',      __( 'الإجازات',           'rsyi-system' ), 'rsyi_hr_view_leaves'      ],
-            [ 'rsyi-hr-attendance',  __( 'الحضور والانصراف',   'rsyi-system' ), 'rsyi_hr_view_attendance'  ],
-            [ 'rsyi-hr-overtime',    __( 'العمل الإضافي',      'rsyi-system' ), 'rsyi_hr_view_overtime'    ],
-            [ 'rsyi-hr-violations',  __( 'المخالفات',          'rsyi-system' ), 'rsyi_hr_view_violations'  ],
-        ];
-
-        // عنوان قسم (separator trick)
-        add_submenu_page( 'rsyi-system', '', '<span class="rsyi-menu-sep">── HR ──</span>', 'rsyi_sys_view_hr', '#rsyi-hr-sep', '__return_false' );
-
-        foreach ( $pages as [ $slug, $title, $cap ] ) {
+        // الموارد البشرية | HR
+        if ( RSYI_Sys_Module_Loader::is_loaded( 'hr' ) ) {
             add_submenu_page(
                 'rsyi-system',
-                $title,
-                $title,
-                $cap,
-                $slug,
-                [ self::class, 'render_hr_page' ]
+                __( 'الموارد البشرية | HR', 'rsyi-system' ),
+                __( 'الموارد البشرية', 'rsyi-system' ),
+                'manage_options',
+                'rsyi-hr',
+                [ self::class, 'render_hr' ]
             );
         }
+
+        // شئون الطلاب | Student Affairs
+        if ( RSYI_Sys_Module_Loader::is_loaded( 'students' ) ) {
+            add_submenu_page(
+                'rsyi-system',
+                __( 'شئون الطلاب | Student Affairs', 'rsyi-system' ),
+                __( 'شئون الطلاب', 'rsyi-system' ),
+                'manage_options',
+                'rsyi-students',
+                [ self::class, 'render_students' ]
+            );
+        }
+
+        // المخازن | Warehouse
+        if ( RSYI_Sys_Module_Loader::is_loaded( 'warehouse' ) ) {
+            add_submenu_page(
+                'rsyi-system',
+                __( 'المخازن | Warehouse', 'rsyi-system' ),
+                __( 'المخازن', 'rsyi-system' ),
+                'manage_options',
+                'rsyi-warehouse',
+                [ self::class, 'render_warehouse' ]
+            );
+        }
+
+        // الحسابات (قيد الإنشاء) | Accounting (coming soon)
+        add_submenu_page(
+            'rsyi-system',
+            __( 'الحسابات | Accounting', 'rsyi-system' ),
+            __( 'الحسابات 🔒', 'rsyi-system' ),
+            'manage_options',
+            'rsyi-accounting',
+            [ self::class, 'render_accounting' ]
+        );
+
+        // الإعدادات | Settings
+        add_submenu_page(
+            'rsyi-system',
+            __( 'الإعدادات | Settings', 'rsyi-system' ),
+            __( 'الإعدادات', 'rsyi-system' ),
+            'manage_options',
+            'rsyi-settings',
+            [ self::class, 'render_settings' ]
+        );
     }
 
-    private static function warehouse_submenu(): void {
-        $pages = [
-            [ 'rsyi-wh-products',          __( 'المنتجات والأصناف',   'rsyi-system' ), 'rsyi_wh_view_products'  ],
-            [ 'rsyi-wh-add-orders',         __( 'أوامر الإضافة',       'rsyi-system' ), 'rsyi_wh_manage_orders'  ],
-            [ 'rsyi-wh-withdrawal-orders',  __( 'أوامر الصرف',         'rsyi-system' ), 'rsyi_wh_manage_orders'  ],
-            [ 'rsyi-wh-purchase-requests',  __( 'طلبات الشراء',        'rsyi-system' ), 'rsyi_wh_view_purchases' ],
-            [ 'rsyi-wh-suppliers',          __( 'الموردون',            'rsyi-system' ), 'rsyi_wh_view_suppliers' ],
-            [ 'rsyi-wh-reports',            __( 'تقارير المخازن',      'rsyi-system' ), 'rsyi_wh_view_reports'   ],
-        ];
+    // ─── Renderers ───────────────────────────────────────────────────────────
 
-        add_submenu_page( 'rsyi-system', '', '<span class="rsyi-menu-sep">── مخازن ──</span>', 'rsyi_sys_view_warehouse', '#rsyi-wh-sep', '__return_false' );
-
-        foreach ( $pages as [ $slug, $title, $cap ] ) {
-            add_submenu_page( 'rsyi-system', $title, $title, $cap, $slug, [ self::class, 'render_warehouse_page' ] );
-        }
+    public static function render_main(): void {
+        $tab = sanitize_key( $_GET['tab'] ?? 'dashboard' );
+        self::render_wrapper( $tab );
     }
 
-    private static function students_submenu(): void {
-        $pages = [
-            [ 'rsyi-sa-students',  __( 'قيد الطلاب',          'rsyi-system' ), 'rsyi_sa_view_students'  ],
-            [ 'rsyi-sa-documents', __( 'المستندات',            'rsyi-system' ), 'rsyi_sa_view_documents' ],
-            [ 'rsyi-sa-permits',   __( 'التصاريح',             'rsyi-system' ), 'rsyi_sa_view_permits'   ],
-            [ 'rsyi-sa-behavior',  __( 'السلوك والمخالفات',   'rsyi-system' ), 'rsyi_sa_view_behavior'  ],
-            [ 'rsyi-sa-cohorts',   __( 'الدفعات',             'rsyi-system' ), 'rsyi_sa_view_cohorts'   ],
-        ];
+    public static function render_hr(): void {
+        $tab = sanitize_key( $_GET['tab'] ?? 'employees' );
+        self::render_wrapper( 'hr', $tab );
+    }
 
-        add_submenu_page( 'rsyi-system', '', '<span class="rsyi-menu-sep">── طلاب ──</span>', 'rsyi_sa_view_students', '#rsyi-sa-sep', '__return_false' );
+    public static function render_students(): void {
+        $tab = sanitize_key( $_GET['tab'] ?? 'students' );
+        self::render_wrapper( 'students', $tab );
+    }
 
-        foreach ( $pages as [ $slug, $title, $cap ] ) {
-            add_submenu_page( 'rsyi-system', $title, $title, $cap, $slug, [ self::class, 'render_students_page' ] );
-        }
+    public static function render_warehouse(): void {
+        $tab = sanitize_key( $_GET['tab'] ?? 'products' );
+        self::render_wrapper( 'warehouse', $tab );
+    }
+
+    public static function render_accounting(): void {
+        self::render_wrapper( 'accounting' );
+    }
+
+    public static function render_settings(): void {
+        self::render_wrapper( 'settings' );
+    }
+
+    // ─── Core Wrapper ────────────────────────────────────────────────────────
+
+    /**
+     * يعرض الغلاف الرئيسي مع شريط التبويبات | Renders wrapper with tab bar.
+     */
+    private static function render_wrapper( string $module, string $sub_tab = '' ): void {
+        $opts = get_option( 'rsyi_sys_options', RSYI_Sys_Settings::DEFAULTS );
+        require_once RSYI_SYS_DIR . 'admin/views/layout.php';
     }
 
     // ─── Assets ──────────────────────────────────────────────────────────────
 
     public static function enqueue_assets( string $hook ): void {
-        // تحميل الـ assets فقط في صفحات RSYI
         if ( strpos( $hook, 'rsyi' ) === false && $hook !== 'toplevel_page_rsyi-system' ) {
             return;
         }
 
-        // Bootstrap 4 RTL
+        // Bootstrap 5 RTL
         wp_enqueue_style(
-            'rsyi-sys-bootstrap',
-            'https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css',
+            'rsyi-bootstrap',
+            'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css',
             [],
-            '4.2.1'
+            '5.3.3'
+        );
+        wp_enqueue_script(
+            'rsyi-bootstrap-js',
+            'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js',
+            [],
+            '5.3.3',
+            true
         );
 
-        // Font Awesome
+        // Font Awesome 6
         wp_enqueue_style(
-            'rsyi-sys-fa',
-            'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css',
+            'rsyi-fa',
+            'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css',
             [],
-            '4.7.0'
-        );
-
-        // Admin CSS
-        wp_enqueue_style(
-            'rsyi-sys-admin',
-            RSYI_SYS_URL . 'assets/css/admin.css',
-            [ 'rsyi-sys-bootstrap' ],
-            RSYI_SYS_VERSION
+            '6.5.0'
         );
 
         // Chart.js
-        wp_enqueue_script( 'rsyi-sys-chartjs', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js', [], '2.7.1', true );
-
-        // Select2
-        wp_enqueue_style(  'rsyi-sys-select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css', [], '4.0.13' );
-        wp_enqueue_script( 'rsyi-sys-select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', [ 'jquery' ], '4.0.13', true );
-
-        // Admin JS
         wp_enqueue_script(
-            'rsyi-sys-admin',
-            RSYI_SYS_URL . 'assets/js/admin.js',
-            [ 'jquery', 'rsyi-sys-select2', 'rsyi-sys-chartjs' ],
+            'rsyi-chartjs',
+            'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js',
+            [],
+            '4.4.0',
+            true
+        );
+
+        // Admin CSS (unified)
+        wp_enqueue_style(
+            'rsyi-admin',
+            RSYI_SYS_URL . 'assets/css/rsyi-admin.css',
+            [ 'rsyi-bootstrap' ],
+            RSYI_SYS_VERSION
+        );
+
+        // Admin JS (unified)
+        wp_enqueue_script(
+            'rsyi-admin',
+            RSYI_SYS_URL . 'assets/js/rsyi-admin.js',
+            [ 'jquery', 'rsyi-bootstrap-js' ],
             RSYI_SYS_VERSION,
             true
         );
 
-        // Localize
-        wp_localize_script( 'rsyi-sys-admin', 'rsyiSys', [
-            'ajaxUrl'   => admin_url( 'admin-ajax.php' ),
-            'nonce'     => wp_create_nonce( 'rsyi_sys_admin' ),
-            'adminUrl'  => admin_url( 'admin.php' ),
-            'unread'    => RSYI_Sys_DB_Installer::unread_count( get_current_user_id() ),
-            'i18n'      => [
-                'confirm_delete' => __( 'هل أنت متأكد من الحذف؟ لا يمكن التراجع.', 'rsyi-system' ),
-                'saving'         => __( 'جارٍ الحفظ...', 'rsyi-system' ),
-                'saved'          => __( 'تم الحفظ بنجاح', 'rsyi-system' ),
-                'error'          => __( 'حدث خطأ، حاول مجددًا', 'rsyi-system' ),
+        wp_localize_script( 'rsyi-admin', 'rsyiSys', [
+            'ajaxUrl'  => admin_url( 'admin-ajax.php' ),
+            'nonce'    => wp_create_nonce( 'rsyi_sys_admin' ),
+            'adminUrl' => admin_url( 'admin.php' ),
+            'unread'   => RSYI_Sys_DB_Installer::unread_count( get_current_user_id() ),
+            'i18n'     => [
+                'confirm_delete' => __( 'هل أنت متأكد؟ | Are you sure? This cannot be undone.', 'rsyi-system' ),
+                'saving'         => __( 'جارٍ الحفظ... | Saving...', 'rsyi-system' ),
+                'saved'          => __( 'تم الحفظ | Saved', 'rsyi-system' ),
+                'error'          => __( 'حدث خطأ | Error occurred', 'rsyi-system' ),
+                'module_enabled' => __( 'تم تفعيل الوحدة | Module enabled', 'rsyi-system' ),
+                'module_disabled'=> __( 'تم إيقاف الوحدة | Module disabled', 'rsyi-system' ),
             ],
         ] );
-    }
-
-    // ─── Renderers ───────────────────────────────────────────────────────────
-
-    public static function render_dashboard(): void {
-        if ( ! current_user_can( 'rsyi_sys_view_dashboard' ) ) {
-            wp_die( esc_html__( 'غير مصرح.', 'rsyi-system' ) );
-        }
-        require_once RSYI_SYS_DIR . 'admin/views/dashboard.php';
-    }
-
-    public static function render_hr_page(): void {
-        if ( ! current_user_can( 'rsyi_sys_view_hr' ) ) {
-            wp_die( esc_html__( 'غير مصرح.', 'rsyi-system' ) );
-        }
-        $page = sanitize_key( $_GET['page'] ?? '' );
-        $view = str_replace( 'rsyi-hr-', '', $page );
-        $file = RSYI_SYS_DIR . "admin/views/hr/{$view}.php";
-        if ( file_exists( $file ) ) {
-            require_once $file;
-        } else {
-            echo '<div class="wrap"><p>' . esc_html__( 'الصفحة غير موجودة.', 'rsyi-system' ) . '</p></div>';
-        }
-    }
-
-    public static function render_warehouse_page(): void {
-        if ( ! current_user_can( 'rsyi_sys_view_warehouse' ) ) {
-            wp_die( esc_html__( 'غير مصرح.', 'rsyi-system' ) );
-        }
-        $page = sanitize_key( $_GET['page'] ?? '' );
-        $view = str_replace( 'rsyi-wh-', '', $page );
-        $file = RSYI_SYS_DIR . "admin/views/warehouse/{$view}.php";
-        if ( file_exists( $file ) ) {
-            require_once $file;
-        } else {
-            echo '<div class="wrap"><p>' . esc_html__( 'الصفحة غير موجودة.', 'rsyi-system' ) . '</p></div>';
-        }
-    }
-
-    public static function render_students_page(): void {
-        if ( ! current_user_can( 'rsyi_sa_view_students' ) ) {
-            wp_die( esc_html__( 'غير مصرح.', 'rsyi-system' ) );
-        }
-        $page = sanitize_key( $_GET['page'] ?? '' );
-        $view = str_replace( 'rsyi-sa-', '', $page );
-        $file = RSYI_SYS_DIR . "admin/views/students/{$view}.php";
-        if ( file_exists( $file ) ) {
-            require_once $file;
-        } else {
-            echo '<div class="wrap"><p>' . esc_html__( 'الصفحة غير موجودة.', 'rsyi-system' ) . '</p></div>';
-        }
-    }
-
-    public static function render_audit_log(): void {
-        if ( ! current_user_can( 'rsyi_sys_view_audit_log' ) ) {
-            wp_die( esc_html__( 'غير مصرح.', 'rsyi-system' ) );
-        }
-        require_once RSYI_SYS_DIR . 'admin/views/audit-log.php';
     }
 
     // ─── AJAX ────────────────────────────────────────────────────────────────
@@ -278,5 +242,25 @@ class RSYI_Sys_Admin {
             )
         );
         wp_send_json_success( $rows );
+    }
+
+    public static function ajax_toggle_module(): void {
+        check_ajax_referer( 'rsyi_sys_admin', 'nonce' );
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( 'Unauthorized' );
+        }
+        $module  = sanitize_key( $_POST['module'] ?? '' );
+        $enabled = (bool) ( $_POST['enabled'] ?? false );
+
+        $allowed = [ 'hr', 'students', 'warehouse' ];
+        if ( ! in_array( $module, $allowed, true ) ) {
+            wp_send_json_error( 'Invalid module' );
+        }
+
+        RSYI_Sys_Settings::set( $module . '_enabled', $enabled ? '1' : '0' );
+        wp_send_json_success( [
+            'module'  => $module,
+            'enabled' => $enabled,
+        ] );
     }
 }

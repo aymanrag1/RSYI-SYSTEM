@@ -24,6 +24,29 @@ class RSYI_Sys_DB_Installer {
     // ─── Public API ──────────────────────────────────────────────────────────
 
     /**
+     * تثبيت جداول الوحدات الفرعية (HR + Students + Warehouse).
+     * Install sub-module DB tables — safe, uses dbDelta (won't destroy existing data).
+     * لن تُمحى البيانات الموجودة — dbDelta يضيف فقط ما ينقص.
+     */
+    public static function install_modules(): void {
+        // HR | نظام الموارد البشرية  (namespace: RSYI_HR)
+        if ( class_exists( 'RSYI_HR\DB_Installer' ) ) {
+            \RSYI_HR\DB_Installer::install();
+        }
+
+        // Student Affairs | شئون الطلاب  (namespace: RSYI_SA)
+        if ( class_exists( 'RSYI_SA\DB_Installer' ) ) {
+            \RSYI_SA\DB_Installer::install();
+        }
+
+        // Warehouse | المخازن  (global namespace)
+        if ( class_exists( 'IW_Database' ) ) {
+            $db = new IW_Database();
+            $db->create_tables();
+        }
+    }
+
+    /**
      * تثبيت / تحديث جداول قاعدة البيانات.
      * آمن للاستدعاء عدة مرات (idempotent).
      */
