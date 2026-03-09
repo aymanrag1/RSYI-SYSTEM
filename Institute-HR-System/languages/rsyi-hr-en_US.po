@@ -1,0 +1,134 @@
+# English (US) translation for RSYI HR System
+# Developer: AYMAN RAGAB | Mobile: +201159230034
+msgid ""
+msgstr ""
+"Project-Id-Version: RSYI HR System 2.1.0\n"
+"POT-Creation-Date: 2024-02-25T00:00:00+00:00\n"
+"PO-Revision-Date: 2024-02-25T00:00:00+00:00\n"
+"Last-Translator: AYMAN RAGAB\n"
+"Language-Team: English\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: rsyi-hr\n"
+
+msgid "الموارد البشرية"
+msgstr "Human Resources"
+
+msgid "لوحة التحكم"
+msgstr "Dashboard"
+
+msgid "الموظفون"
+msgstr "Employees"
+
+msgid "الأقسام"
+msgstr "Departments"
+
+msgid "التقسيم الوظيفي"
+msgstr "Job Titles"
+
+msgid "طلبات الإجازة"
+msgstr "Leave Requests"
+
+msgid "العمل الإضافي"
+msgstr "Overtime"
+
+msgid "الحضور والانصراف"
+msgstr "Attendance"
+
+msgid "المخالفات والجزاءات"
+msgstr "Violations & Penalties"
+
+msgid "الصلاحيات"
+msgstr "Permissions"
+
+msgid "طلب إجازة"
+msgstr "Leave Request"
+
+msgid "اعتيادية"
+msgstr "Regular"
+
+msgid "مرضية"
+msgstr "Sick"
+
+msgid "عارضة"
+msgstr "Casual"
+
+msgid "بدون مرتب"
+msgstr "Unpaid"
+
+msgid "حاضر"
+msgstr "Present"
+
+msgid "غائب"
+msgstr "Absent"
+
+msgid "متأخر"
+msgstr "Late"
+
+msgid "نصف يوم"
+msgstr "Half Day"
+
+msgid "إجازة رسمية"
+msgstr "Public Holiday"
+
+msgid "إجازة"
+msgstr "Vacation"
+
+msgid "البند"
+msgstr "Item"
+
+msgid "بدون صلاحية"
+msgstr "No Permission"
+
+msgid "عرض فقط"
+msgstr "View Only"
+
+msgid "قراءة"
+msgstr "Read"
+
+msgid "قراءة وكتابة"
+msgstr "Read & Write"
+
+msgid "حفظ الصلاحيات"
+msgstr "Save Permissions"
+
+msgid "ضبط الصلاحيات"
+msgstr "Reset Permissions"
+
+msgid "التوقيع الإلكتروني"
+msgstr "Electronic Signature"
+
+msgid "رفع التوقيع"
+msgstr "Upload Signature"
+
+msgid "تم الحفظ بنجاح."
+msgstr "Saved successfully."
+
+msgid "تم الاعتماد بنجاح."
+msgstr "Approved successfully."
+
+msgid "حدث خطأ، حاول مجدداً."
+msgstr "An error occurred. Please try again."
+
+msgid "جارٍ التحميل..."
+msgstr "Loading..."
+
+msgid "تم رفع طلب الإجازة بنجاح."
+msgstr "Leave request submitted successfully."
+
+msgid "تم رفع طلب العمل الإضافي بنجاح."
+msgstr "Overtime request submitted successfully."
+
+msgid "تم رفع التوقيع بنجاح."
+msgstr "Signature uploaded successfully."
+
+msgid "تم حفظ الصلاحيات بنجاح."
+msgstr "Permissions saved successfully."
+
+msgid "تم إعادة ضبط الصلاحيات."
+msgstr "Permissions reset successfully."
+
+msgid "يجب تسجيل الدخول للوصول إلى بوابة الموظف."
+msgstr "You must be logged in to access the Employee Portal."

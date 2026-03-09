@@ -1,0 +1,134 @@
+# Arabic translation for RSYI HR System
+# Developer: AYMAN RAGAB | Mobile: +201159230034
+msgid ""
+msgstr ""
+"Project-Id-Version: RSYI HR System 2.1.0\n"
+"POT-Creation-Date: 2024-02-25T00:00:00+00:00\n"
+"PO-Revision-Date: 2024-02-25T00:00:00+00:00\n"
+"Last-Translator: AYMAN RAGAB\n"
+"Language-Team: Arabic\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: rsyi-hr\n"
+
+msgid "الموارد البشرية"
+msgstr "الموارد البشرية"
+
+msgid "لوحة التحكم"
+msgstr "لوحة التحكم"
+
+msgid "الموظفون"
+msgstr "الموظفون"
+
+msgid "الأقسام"
+msgstr "الأقسام"
+
+msgid "التقسيم الوظيفي"
+msgstr "التقسيم الوظيفي"
+
+msgid "طلبات الإجازة"
+msgstr "طلبات الإجازة"
+
+msgid "العمل الإضافي"
+msgstr "العمل الإضافي"
+
+msgid "الحضور والانصراف"
+msgstr "الحضور والانصراف"
+
+msgid "المخالفات والجزاءات"
+msgstr "المخالفات والجزاءات"
+
+msgid "الصلاحيات"
+msgstr "الصلاحيات"
+
+msgid "طلب إجازة"
+msgstr "طلب إجازة"
+
+msgid "اعتيادية"
+msgstr "اعتيادية"
+
+msgid "مرضية"
+msgstr "مرضية"
+
+msgid "عارضة"
+msgstr "عارضة"
+
+msgid "بدون مرتب"
+msgstr "بدون مرتب"
+
+msgid "حاضر"
+msgstr "حاضر"
+
+msgid "غائب"
+msgstr "غائب"
+
+msgid "متأخر"
+msgstr "متأخر"
+
+msgid "نصف يوم"
+msgstr "نصف يوم"
+
+msgid "إجازة رسمية"
+msgstr "إجازة رسمية"
+
+msgid "إجازة"
+msgstr "إجازة"
+
+msgid "البند"
+msgstr "البند"
+
+msgid "بدون صلاحية"
+msgstr "بدون صلاحية"
+
+msgid "عرض فقط"
+msgstr "عرض فقط"
+
+msgid "قراءة"
+msgstr "قراءة"
+
+msgid "قراءة وكتابة"
+msgstr "قراءة وكتابة"
+
+msgid "حفظ الصلاحيات"
+msgstr "حفظ الصلاحيات"
+
+msgid "ضبط الصلاحيات"
+msgstr "ضبط الصلاحيات"
+
+msgid "التوقيع الإلكتروني"
+msgstr "التوقيع الإلكتروني"
+
+msgid "رفع التوقيع"
+msgstr "رفع التوقيع"
+
+msgid "تم الحفظ بنجاح."
+msgstr "تم الحفظ بنجاح."
+
+msgid "تم الاعتماد بنجاح."
+msgstr "تم الاعتماد بنجاح."
+
+msgid "حدث خطأ، حاول مجدداً."
+msgstr "حدث خطأ، حاول مجدداً."
+
+msgid "جارٍ التحميل..."
+msgstr "جارٍ التحميل..."
+
+msgid "تم رفع طلب الإجازة بنجاح."
+msgstr "تم رفع طلب الإجازة بنجاح."
+
+msgid "تم رفع طلب العمل الإضافي بنجاح."
+msgstr "تم رفع طلب العمل الإضافي بنجاح."
+
+msgid "تم رفع التوقيع بنجاح."
+msgstr "تم رفع التوقيع بنجاح."
+
+msgid "تم حفظ الصلاحيات بنجاح."
+msgstr "تم حفظ الصلاحيات بنجاح."
+
+msgid "تم إعادة ضبط الصلاحيات."
+msgstr "تم إعادة ضبط الصلاحيات."
+
+msgid "يجب تسجيل الدخول للوصول إلى بوابة الموظف."
+msgstr "يجب تسجيل الدخول للوصول إلى بوابة الموظف."

@@ -1,0 +1,132 @@
+# RSYI HR System — Translation Template
+# Developer: AYMAN RAGAB | Mobile: +201159230034
+# Copyright (C) 2024 AYMAN RAGAB
+msgid ""
+msgstr ""
+"Project-Id-Version: RSYI HR System 2.1.0\n"
+"POT-Creation-Date: 2024-02-25T00:00:00+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: rsyi-hr\n"
+"Last-Translator: AYMAN RAGAB\n"
+
+msgid "الموارد البشرية"
+msgstr ""
+
+msgid "لوحة التحكم"
+msgstr ""
+
+msgid "الموظفون"
+msgstr ""
+
+msgid "الأقسام"
+msgstr ""
+
+msgid "التقسيم الوظيفي"
+msgstr ""
+
+msgid "طلبات الإجازة"
+msgstr ""
+
+msgid "العمل الإضافي"
+msgstr ""
+
+msgid "الحضور والانصراف"
+msgstr ""
+
+msgid "المخالفات والجزاءات"
+msgstr ""
+
+msgid "الصلاحيات"
+msgstr ""
+
+msgid "طلب إجازة"
+msgstr ""
+
+msgid "اعتيادية"
+msgstr ""
+
+msgid "مرضية"
+msgstr ""
+
+msgid "عارضة"
+msgstr ""
+
+msgid "بدون مرتب"
+msgstr ""
+
+msgid "حاضر"
+msgstr ""
+
+msgid "غائب"
+msgstr ""
+
+msgid "متأخر"
+msgstr ""
+
+msgid "نصف يوم"
+msgstr ""
+
+msgid "إجازة رسمية"
+msgstr ""
+
+msgid "إجازة"
+msgstr ""
+
+msgid "البند"
+msgstr ""
+
+msgid "بدون صلاحية"
+msgstr ""
+
+msgid "عرض فقط"
+msgstr ""
+
+msgid "قراءة"
+msgstr ""
+
+msgid "قراءة وكتابة"
+msgstr ""
+
+msgid "حفظ الصلاحيات"
+msgstr ""
+
+msgid "ضبط الصلاحيات"
+msgstr ""
+
+msgid "التوقيع الإلكتروني"
+msgstr ""
+
+msgid "رفع التوقيع"
+msgstr ""
+
+msgid "تم الحفظ بنجاح."
+msgstr ""
+
+msgid "تم الاعتماد بنجاح."
+msgstr ""
+
+msgid "حدث خطأ، حاول مجدداً."
+msgstr ""
+
+msgid "جارٍ التحميل..."
+msgstr ""
+
+msgid "تم رفع طلب الإجازة بنجاح."
+msgstr ""
+
+msgid "تم رفع طلب العمل الإضافي بنجاح."
+msgstr ""
+
+msgid "تم رفع التوقيع بنجاح."
+msgstr ""
+
+msgid "تم حفظ الصلاحيات بنجاح."
+msgstr ""
+
+msgid "تم إعادة ضبط الصلاحيات."
+msgstr ""
+
+msgid "يجب تسجيل الدخول للوصول إلى بوابة الموظف."
+msgstr ""
