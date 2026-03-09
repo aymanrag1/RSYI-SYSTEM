@@ -53,7 +53,6 @@ spl_autoload_register( function ( string $class ): void {
         'RSYI_Sys_Settings'       => 'includes/class-rsyi-settings.php',
         'RSYI_Sys_Module_Loader'  => 'includes/class-rsyi-module-loader.php',
         'RSYI_Sys_Admin'          => 'admin/class-rsyi-admin.php',
-        'RSYI_Sys_Portal'         => 'portal/class-rsyi-portal.php',
     ];
     if ( isset( $map[ $class ] ) ) {
         require_once RSYI_SYS_DIR . $map[ $class ];
@@ -92,7 +91,10 @@ register_deactivation_hook( __FILE__, function (): void {
 
 // ─── Bootstrap ───────────────────────────────────────────────────────────────
 
-add_action( 'plugins_loaded', 'rsyi_sys_init', 5 );
+// تهيئة عند priority 20 — بعد تحميل جميع البلاجنز الأخرى
+// Init at priority 20 — after all other plugins have loaded their classes
+// This prevents class redeclaration conflicts with legacy sub-plugins.
+add_action( 'plugins_loaded', 'rsyi_sys_init', 20 );
 
 /**
  * تهيئة النظام الموحد | Bootstrap the unified system.
