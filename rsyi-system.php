@@ -62,26 +62,29 @@ spl_autoload_register( function ( string $class ): void {
 // ─── Activation ──────────────────────────────────────────────────────────────
 
 register_activation_hook( __FILE__, function (): void {
-    // تحميل كل الوحدات لتثبيت قواعد البياناتها | Load all for DB install
-    require_once RSYI_SYS_DIR . 'includes/class-rsyi-module-loader.php';
-    RSYI_Sys_Module_Loader::load_all();
+    try {
+        // تثبيت جداول النظام الموحد فقط | Install ONLY unified system tables (safe)
+        require_once RSYI_SYS_DIR . 'includes/class-rsyi-db-installer.php';
+        RSYI_Sys_DB_Installer::install();
 
-    // تثبيت جداول النظام الموحد | Install unified system tables
-    require_once RSYI_SYS_DIR . 'includes/class-rsyi-db-installer.php';
-    RSYI_Sys_DB_Installer::install();
+        // الإعدادات الافتراضية | Default options
+        require_once RSYI_SYS_DIR . 'includes/class-rsyi-settings.php';
+        if ( ! get_option( 'rsyi_sys_options' ) ) {
+            update_option( 'rsyi_sys_options', RSYI_Sys_Settings::DEFAULTS );
+        }
 
-    // تثبيت جداول الوحدات الفرعية | Install sub-module tables
-    RSYI_Sys_DB_Installer::install_modules();
+        update_option( 'rsyi_sys_version', RSYI_SYS_VERSION );
+        // تمييز أن وحدات الموارد لم تُثبَّت بعد (تُثبَّت عند أول تشغيل)
+        // Flag: sub-module DB tables not yet installed (done on first run)
+        delete_option( 'rsyi_sys_modules_installed' );
 
-    // إضافة الأدوار والصلاحيات | Add roles & caps
-    require_once RSYI_SYS_DIR . 'includes/class-rsyi-roles.php';
-    RSYI_Sys_Roles::add_roles();
-
-    update_option( 'rsyi_sys_version', RSYI_SYS_VERSION );
-
-    // الإعدادات الافتراضية إذا لم تكن موجودة | Default settings if not set
-    if ( ! get_option( 'rsyi_sys_options' ) ) {
-        update_option( 'rsyi_sys_options', RSYI_Sys_Settings::DEFAULTS );
+    } catch ( \Throwable $e ) {
+        // تسجيل الخطأ الفادح لتسهيل التشخيص | Log for diagnosis
+        // phpcs:ignore WordPress.PHP.DevelopmentFunctions
+        error_log( 'RSYI activation error: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine() );
+        // تخزين في Option لعرضه في لوحة التحكم
+        update_option( 'rsyi_sys_activation_error', $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine() );
+        throw $e; // re-throw so WP still reports the activation failure
     }
 } );
 
@@ -111,6 +114,15 @@ function rsyi_sys_init(): void {
     // تحميل الوحدات المفعَّلة | Load enabled modules
     RSYI_Sys_Module_Loader::load();
 
+    // تثبيت جداول الوحدات الفرعية عند أول تشغيل بعد التفعيل
+    // Install sub-module DB tables on first run after activation
+    if ( ! get_option( 'rsyi_sys_modules_installed' ) ) {
+        RSYI_Sys_DB_Installer::install_modules();
+        require_once RSYI_SYS_DIR . 'includes/class-rsyi-roles.php';
+        RSYI_Sys_Roles::add_roles();
+        update_option( 'rsyi_sys_modules_installed', '1' );
+    }
+
     // تحديث قاعدة البيانات عند ترقية النسخة | DB upgrade on version bump
     if ( get_option( 'rsyi_sys_version' ) !== RSYI_SYS_VERSION ) {
         RSYI_Sys_DB_Installer::install();
@@ -121,6 +133,17 @@ function rsyi_sys_init(): void {
 
     // تهيئة الإعدادات | Init settings
     RSYI_Sys_Settings::init();
+
+    // عرض خطأ التفعيل إن وجد | Display activation error if any (admin only)
+    if ( is_admin() ) {
+        $act_err = get_option( 'rsyi_sys_activation_error' );
+        if ( $act_err ) {
+            add_action( 'admin_notices', function () use ( $act_err ) {
+                echo '<div class="notice notice-error"><p><strong>RSYI System — خطأ التفعيل:</strong> '
+                    . esc_html( $act_err ) . '</p></div>';
+            } );
+        }
+    }
 
     // تهيئة واجهة الإدارة | Init admin
     if ( is_admin() ) {
