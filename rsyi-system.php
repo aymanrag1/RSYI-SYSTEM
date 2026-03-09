@@ -111,26 +111,6 @@ function rsyi_sys_init(): void {
         dirname( RSYI_SYS_BASENAME ) . '/languages'
     );
 
-    // تحميل الوحدات المفعَّلة | Load enabled modules
-    RSYI_Sys_Module_Loader::load();
-
-    // تثبيت جداول الوحدات الفرعية عند أول تشغيل بعد التفعيل
-    // Install sub-module DB tables on first run after activation
-    if ( ! get_option( 'rsyi_sys_modules_installed' ) ) {
-        RSYI_Sys_DB_Installer::install_modules();
-        require_once RSYI_SYS_DIR . 'includes/class-rsyi-roles.php';
-        RSYI_Sys_Roles::add_roles();
-        update_option( 'rsyi_sys_modules_installed', '1' );
-    }
-
-    // تحديث قاعدة البيانات عند ترقية النسخة | DB upgrade on version bump
-    if ( get_option( 'rsyi_sys_version' ) !== RSYI_SYS_VERSION ) {
-        RSYI_Sys_DB_Installer::install();
-        RSYI_Sys_DB_Installer::install_modules();
-        RSYI_Sys_Roles::sync_roles();
-        update_option( 'rsyi_sys_version', RSYI_SYS_VERSION );
-    }
-
     // تهيئة الإعدادات | Init settings
     RSYI_Sys_Settings::init();
 
@@ -139,21 +119,46 @@ function rsyi_sys_init(): void {
         $act_err = get_option( 'rsyi_sys_activation_error' );
         if ( $act_err ) {
             add_action( 'admin_notices', function () use ( $act_err ) {
-                echo '<div class="notice notice-error"><p><strong>RSYI System — خطأ التفعيل:</strong> '
+                echo '<div class="notice notice-error"><p><strong>RSYI System — خطأ:</strong> '
                     . esc_html( $act_err ) . '</p></div>';
             } );
         }
     }
 
-    // تهيئة واجهة الإدارة | Init admin
+    // تهيئة واجهة الإدارة (القوائم فقط الآن — الكلاسات تُحمَّل عند init)
+    // Init admin menus now — module classes loaded at 'init' hook (after ALL plugins finish)
     if ( is_admin() ) {
         RSYI_Sys_Admin::init();
     }
 
-    // تهيئة بوابة شئون الطلاب | Init Student Affairs portal shortcodes
-    if ( ! is_admin() && RSYI_Sys_Module_Loader::is_loaded( 'students' ) ) {
-        if ( class_exists( 'RSYI_SA\Shortcodes' ) ) {
-            \RSYI_SA\Shortcodes::init();
+    // ─── تحميل ملفات الوحدات عند init — بعد اكتمال plugins_loaded لكل البلاجنز ───
+    // Load module files at 'init' — guaranteed AFTER every plugin's plugins_loaded
+    // callback has run, so class_exists() guards work reliably.
+    add_action( 'init', function (): void {
+
+        RSYI_Sys_Module_Loader::load();
+
+        // تثبيت الجداول والأدوار عند أول تشغيل | First-run setup
+        if ( ! get_option( 'rsyi_sys_modules_installed' ) ) {
+            RSYI_Sys_DB_Installer::install_modules();
+            RSYI_Sys_Roles::add_roles();
+            update_option( 'rsyi_sys_modules_installed', '1' );
         }
-    }
+
+        // ترقية النسخة | Version upgrade
+        if ( get_option( 'rsyi_sys_version' ) !== RSYI_SYS_VERSION ) {
+            RSYI_Sys_DB_Installer::install();
+            RSYI_Sys_DB_Installer::install_modules();
+            RSYI_Sys_Roles::sync_roles();
+            update_option( 'rsyi_sys_version', RSYI_SYS_VERSION );
+        }
+
+        // بوابة شئون الطلاب | Student Affairs portal shortcodes
+        if ( ! is_admin() && RSYI_Sys_Module_Loader::is_loaded( 'students' ) ) {
+            if ( class_exists( 'RSYI_SA\Shortcodes' ) ) {
+                \RSYI_SA\Shortcodes::init();
+            }
+        }
+
+    }, 1 );
 }
