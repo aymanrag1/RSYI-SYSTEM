@@ -25,8 +25,8 @@ if ( $sa_active && $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb-
     $sa_violations = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->prefix}rsyi_violations WHERE DATE(created_at) >= DATE_SUB(NOW(), INTERVAL 30 DAY)" );
 }
 if ( $wh_active && $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->prefix . 'iw_products' ) ) ) {
-    $wh_products  = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->prefix}iw_products WHERE is_active=1" );
-    $wh_low_stock = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->prefix}iw_products WHERE current_quantity <= min_quantity AND is_active=1" );
+    $wh_products  = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->prefix}iw_products" );
+    $wh_low_stock = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->prefix}iw_products WHERE current_stock <= min_stock AND min_stock > 0" );
     $wh_orders    = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->prefix}iw_withdrawal_orders WHERE status='pending'" );
 }
 

@@ -31,12 +31,12 @@ class RSYI_Sys_DB_Installer {
     public static function install_modules(): void {
         // HR | نظام الموارد البشرية  (namespace: RSYI_HR)
         if ( class_exists( 'RSYI_HR\DB_Installer' ) ) {
-            \RSYI_HR\DB_Installer::install();
+            \RSYI_HR\DB_Installer::create_tables();
         }
 
         // Student Affairs | شئون الطلاب  (namespace: RSYI_SA)
         if ( class_exists( 'RSYI_SA\DB_Installer' ) ) {
-            \RSYI_SA\DB_Installer::install();
+            \RSYI_SA\DB_Installer::create_tables();
         }
 
         // Warehouse | المخازن  (global namespace)
